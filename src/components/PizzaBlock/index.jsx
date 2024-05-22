@@ -20,13 +20,13 @@ const PizzaBlock = ({
       <h4 class="pizza-block__title">{name}</h4>
       <div class="pizza-block__selector">
         <ul>
-          {types.map((type, index) => (
+          {types.map((type) => (
             <li
-              className={activeTypeIndex === index ? "active" : ""}
+              className={activeTypeIndex === type ? "active" : ""}
               key={type}
-              onClick={() => setActiveTypeIndex(index)}
+              onClick={() => setActiveTypeIndex(type)}
             >
-              {pizzaTypes[index]}
+              {pizzaTypes[type]}
             </li>
           ))}
         </ul>
