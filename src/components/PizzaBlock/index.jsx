@@ -15,10 +15,10 @@ const PizzaBlock = ({
   const [activeTypeIndex, setActiveTypeIndex] = useState(0)
 
   return (
-    <div class="pizza-block">
-      <img class="pizza-block__image" src={imageUrl} alt="Pizza" />
-      <h4 class="pizza-block__title">{name}</h4>
-      <div class="pizza-block__selector">
+    <div className="pizza-block">
+      <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
+      <h4 className="pizza-block__title">{name}</h4>
+      <div className="pizza-block__selector">
         <ul>
           {types.map((type) => (
             <li
@@ -42,9 +42,9 @@ const PizzaBlock = ({
           ))}
         </ul>
       </div>
-      <div class="pizza-block__bottom">
-        <div class="pizza-block__price">from ${price}</div>
-        <div class="button button--outline button--add">
+      <div className="pizza-block__bottom">
+        <div className="pizza-block__price">from ${price}</div>
+        <div className="button button--outline button--add">
           <svg
             width="12"
             height="12"
