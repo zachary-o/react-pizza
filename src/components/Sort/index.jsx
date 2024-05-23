@@ -1,10 +1,15 @@
-import React, { useState } from "react"
+import React, { useState } from "react";
 
-const sortOptions = ["popularity", "price", "A-Z"]
-
-const Sort = () => {
-  const [isOpen, setIsOpen] = useState(false)
-  const [sortOrder, setSortOrder] = useState(sortOptions[0])
+const Sort = ({ sortIndex, setSortIndex }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const sortOptions = [
+    { name: "popularity ⬇️", sortBy: "rating" },
+    { name: "popularity ⬆️", sortBy: "-rating" },
+    { name: "price ⬇️", sortBy: "price" },
+    { name: "price ⬆️", sortBy: "-price" },
+    { name: "A-Z", sortBy: "name" },
+    { name: "Z-A", sortBy: "-name" },
+  ];
 
   return (
     <div className="sort">
@@ -22,28 +27,30 @@ const Sort = () => {
           />
         </svg>
         <b>Sort by</b>
-        <span onClick={() => setIsOpen(!isOpen)}>{sortOrder}</span>
+        <span onClick={() => setIsOpen(!isOpen)}>{sortIndex.name}</span>
       </div>
       {isOpen && (
         <div className="sort__popup">
           <ul>
             {sortOptions.map((sortOption, index) => (
               <li
-                className={sortOptions[index] === sortOrder ? "active" : ""}
+                className={
+                  sortIndex.sortBy === sortOption.sortBy ? "active" : ""
+                }
                 key={index}
                 onClick={() => {
-                  setSortOrder(sortOption)
-                  setIsOpen(false)
+                  setSortIndex(sortOption);
+                  setIsOpen(false);
                 }}
               >
-                {sortOption}
+                {sortOption.name}
               </li>
             ))}
           </ul>
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default Sort
+export default Sort;
