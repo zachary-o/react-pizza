@@ -1,0 +1,42 @@
+.root {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  li {
+    display: inline-block;
+  }
+
+  li + li {
+    margin-left: 20px;
+  }
+
+  a {
+    display: inline-block;
+    text-align: center;
+    width: 40px;
+    height: 40px;
+    line-height: 18px;
+    padding: 10px;
+    border: 1px solid #fe5f1e;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.15s ease-in-out;
+    color: #fe5f1e;
+
+    &:hover {
+      background-color: #fe5f1e;
+      color: #fff;
+    }
+  }
+
+  :global {
+    .selected {
+      a {
+        background-color: darken($color: #fe5f1e, $amount: 20%);
+        border-color: darken($color: #fe5f1e, $amount: 20%);
+        color: #fff;
+      }
+    }
+  }
+}
