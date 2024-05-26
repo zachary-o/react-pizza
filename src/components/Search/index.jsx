@@ -1,9 +1,25 @@
-import React, { useContext } from "react"
-import { SearchContext } from "../../App"
-import styles from "./Search.module.scss"
+import debounce from "lodash.debounce";
+import React, { useCallback, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
+import { setSearchValue } from "../../redux/slices/filterSlice";
+import styles from "./Search.module.scss";
 
 const Search = () => {
-  const { searchValue, setSearchValue } = useContext(SearchContext)
+  const [inputValue, setInputValue] = useState("");
+  const dispatch = useDispatch();
+  const inputRef = useRef();
+
+  const debouncedSearch = useCallback(
+    debounce((searchQuery) => {
+      dispatch(setSearchValue(searchQuery));
+    }, 1000),
+    [dispatch]
+  );
+
+  const onChangeInput = (event) => {
+    setInputValue(event.target.value);
+    debouncedSearch(event.target.value);
+  };
 
   return (
     <div className={styles.root}>
@@ -22,13 +38,18 @@ const Search = () => {
       <input
         className={styles.input}
         placeholder="Search..."
-        value={searchValue}
-        onChange={(event) => setSearchValue(event.target.value)}
+        ref={inputRef}
+        value={inputValue}
+        onChange={onChangeInput}
       />
-      {searchValue && (
+      {inputValue && (
         <svg
           className={styles.clearIcon}
-          onClick={() => setSearchValue("")}
+          onClick={() => {
+            setInputValue("");
+            dispatch(setSearchValue(""));
+            inputRef.current.focus();
+          }}
           height="48"
           viewBox="0 0 48 48"
           width="48"
@@ -39,7 +60,7 @@ const Search = () => {
         </svg>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default Search
+export default Search;
