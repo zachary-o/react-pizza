@@ -1,6 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
+export type CartItem = {
+  id: number;
+  count: number;
+  imageUrl: string;
+  name: string;
+  type: string;
+  sizes: number[];
+  price: number;
+};
+
+interface CartSliceState {
+  cartItems: CartItem[];
+  totalPrice: number;
+}
+
+const initialState: CartSliceState = {
   cartItems: [],
   totalPrice: 0,
 };
@@ -27,7 +42,7 @@ const cartSlice = createSlice({
       state.cartItems = state.cartItems.filter(
         (cartItem) => cartItem.id !== action.payload.id
       );
-      state.totalPrice -= action.payload.price * action.payload.count
+      state.totalPrice -= action.payload.price * action.payload.count;
     },
     removeSameProduct: (state, action) => {
       const isInCart = state.cartItems.find(

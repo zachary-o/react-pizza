@@ -1,11 +1,12 @@
-import React, { useEffect, useRef, useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { setSortIndex } from "../../redux/slices/filterSlice"
+import { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setSortIndex } from "../../redux/slices/filterSlice";
+import { RootState } from "../../redux/store";
 
 type SortOptions = {
-  name: string
-  sortBy: string
-}
+  name: string;
+  sortBy: string;
+};
 
 export const sortOptions: SortOptions[] = [
   { name: "popularity ⬇️", sortBy: "rating" },
@@ -14,27 +15,27 @@ export const sortOptions: SortOptions[] = [
   { name: "price ⬆️", sortBy: "-price" },
   { name: "A-Z", sortBy: "-name" },
   { name: "Z-A", sortBy: "name" },
-]
+];
 
 const Sort = () => {
-  const [isOpen, setIsOpen] = useState(false)
-  const { sortIndex } = useSelector((state) => (state as any).filter)
-  const dispatch = useDispatch()
-  const sortRef = useRef<HTMLDivElement>(null)
+  const [isOpen, setIsOpen] = useState(false);
+  const { sortIndex } = useSelector((state: RootState) => state.filter);
+  const dispatch = useDispatch();
+  const sortRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleSortClick = (event: MouseEvent) => {
       if (sortRef.current && !sortRef.current.contains(event.target as Node)) {
-        setIsOpen(false)
+        setIsOpen(false);
       }
-    }
+    };
 
-    document.body.addEventListener("click", handleSortClick)
+    document.body.addEventListener("click", handleSortClick);
 
     return () => {
-      document.body.removeEventListener("click", handleSortClick)
-    }
-  }, [isOpen])
+      document.body.removeEventListener("click", handleSortClick);
+    };
+  }, [isOpen]);
 
   return (
     <div className="sort" ref={sortRef}>
@@ -64,8 +65,8 @@ const Sort = () => {
                 }
                 key={index}
                 onClick={() => {
-                  dispatch(setSortIndex(sortOption))
-                  setIsOpen(false)
+                  dispatch(setSortIndex(sortOption));
+                  setIsOpen(false);
                 }}
               >
                 {sortOption.name}
@@ -75,7 +76,7 @@ const Sort = () => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default Sort
+export default Sort;

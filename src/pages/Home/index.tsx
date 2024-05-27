@@ -1,62 +1,63 @@
-import qs from "qs"
-import { useEffect, useRef } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { useNavigate } from "react-router-dom"
-import Categories from "../../components/Categories"
-import Pagination from "../../components/Pagination"
-import PizzaBlock from "../../components/PizzaBlock"
-import Skeleton from "../../components/PizzaBlock/Skeleton"
-import Sort, { sortOptions } from "../../components/Sort"
-import { useGetPizzasQuery } from "../../redux/services/pizzaApi"
-import { setFilters } from "../../redux/slices/filterSlice"
+import qs from "qs";
+import { useEffect, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import Categories from "../../components/Categories";
+import Pagination from "../../components/Pagination";
+import PizzaBlock from "../../components/PizzaBlock";
+import Skeleton from "../../components/PizzaBlock/Skeleton";
+import Sort, { sortOptions } from "../../components/Sort";
+import { useGetPizzasQuery } from "../../redux/services/pizzaApi";
+import { setFilters } from "../../redux/slices/filterSlice";
+import { RootState } from "../../redux/store";
 
 export type PizzaBlockProps = {
-  id: number
-  imageUrl: string
-  name: string
-  types: number[]
-  sizes: number[]
-  price: number
-}
+  id: number;
+  imageUrl: string;
+  name: string;
+  types: number[];
+  sizes: number[];
+  price: number;
+};
 
 const Home = () => {
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
-  const isMounted = useRef(false)
-  const isSearch = useRef(false)
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const isMounted = useRef(false);
+  const isSearch = useRef(false);
   const { categoryIndex, sortIndex, currentPage, searchValue } = useSelector(
-    (state) => (state as any).filter
-  )
+    (state: RootState) => state.filter
+  );
 
-  const category = categoryIndex > 0 ? `category=${categoryIndex}` : ""
-  const sortBy = sortIndex.sortBy.replace("-", "")
-  const order = sortIndex.sortBy.includes("-") ? "asc" : "desc"
-  const search = searchValue ? `&search=${searchValue}` : ""
+  const category = categoryIndex > 0 ? `category=${categoryIndex}` : "";
+  const sortBy = sortIndex.sortBy.replace("-", "");
+  const order = sortIndex.sortBy.includes("-") ? "asc" : "desc";
+  const search = searchValue ? `&search=${searchValue}` : "";
   const { data, error, isLoading } = useGetPizzasQuery({
     category,
     sortBy,
     order,
     search,
     currentPage,
-  })
+  });
 
   useEffect(() => {
     if (window.location.search) {
-      const params = qs.parse(window.location.search.substring(1))
+      const params = qs.parse(window.location.search.substring(1));
 
       const sortIndex = sortOptions.find(
         (sortOption) => sortOption.sortBy === params.sortBy
-      )
+      );
 
       dispatch(
         setFilters({
           ...params,
           sortIndex,
         })
-      )
-      isSearch.current = true
+      );
+      isSearch.current = true;
     }
-  }, [dispatch])
+  }, [dispatch]);
 
   useEffect(() => {
     if (isMounted.current) {
@@ -64,17 +65,17 @@ const Home = () => {
         sortBy: sortIndex.sortBy,
         categoryIndex,
         currentPage,
-      })
+      });
 
-      navigate(`?${queryString}`)
+      navigate(`?${queryString}`);
     }
-    isMounted.current = true
-  }, [categoryIndex, sortIndex, currentPage, navigate])
+    isMounted.current = true;
+  }, [categoryIndex, sortIndex, currentPage, navigate]);
 
   useEffect(() => {
-    window.scrollTo(0, 0)
-    isSearch.current = false
-  }, [categoryIndex, sortIndex, searchValue, currentPage])
+    window.scrollTo(0, 0);
+    isSearch.current = false;
+  }, [categoryIndex, sortIndex, searchValue, currentPage]);
 
   return (
     <div className="container">
@@ -98,7 +99,7 @@ const Home = () => {
         <div className="content__items">
           {isLoading
             ? [...Array(4)].map((_, index) => <Skeleton key={index} />)
-            : data.map((pizza: PizzaBlockProps) => (
+            : data?.map((pizza: PizzaBlockProps) => (
                 <PizzaBlock key={pizza.id} {...pizza} />
               ))}
         </div>
@@ -106,7 +107,7 @@ const Home = () => {
 
       <Pagination />
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

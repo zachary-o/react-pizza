@@ -1,21 +1,30 @@
-import { useDispatch } from "react-redux"
-import { CartItemProps } from "../../pages/Cart"
+import { useDispatch } from "react-redux";
 import {
   addProduct,
   removeProduct,
   removeSameProduct,
-} from "../../redux/slices/cartSlice"
+} from "../../redux/slices/cartSlice";
+
+export type CartItemProps = {
+  id: number;
+  count: number;
+  imageUrl: string;
+  name: string;
+  price: number;
+  size: number;
+  type: string;
+};
 
 const CartItem = ({
-  count,
   id,
+  count,
   imageUrl,
   name,
   price,
   size,
   type,
 }: CartItemProps) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   return (
     <div className="cart__item">
@@ -100,6 +109,6 @@ const CartItem = ({
         </div>
       </div>
     </div>
-  )
-}
-export default CartItem
+  );
+};
+export default CartItem;

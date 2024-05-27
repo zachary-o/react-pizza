@@ -7,8 +7,11 @@ export const store = configureStore({
   reducer: {
     filter,
     cart,
-    [pizzaApi.reducerPath]: pizzaApi.reducer
+    [pizzaApi.reducerPath]: pizzaApi.reducer,
   },
 
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(pizzaApi.middleware)
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(pizzaApi.middleware),
 });
+
+export type RootState = ReturnType<typeof store.getState>;

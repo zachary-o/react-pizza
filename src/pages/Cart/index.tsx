@@ -1,22 +1,16 @@
-import { useDispatch, useSelector } from "react-redux"
-import { Link } from "react-router-dom"
-import CartItem from "../../components/CartItem"
-import { clearCart } from "../../redux/slices/cartSlice"
-import CartEmpty from "./CartEmpty"
-
-export type CartItemProps = {
-  id: number
-  count: number
-  imageUrl: string
-  name: string
-  price: number
-  size: number
-  type: string
-}
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import CartItem from "../../components/CartItem";
+import { clearCart } from "../../redux/slices/cartSlice";
+import { RootState } from "../../redux/store";
+import CartEmpty from "./CartEmpty";
 
 const Cart = () => {
-  const { cartItems, totalPrice } = useSelector((state) => (state as any).cart)
-  const dispatch = useDispatch()
+  const { cartItems, totalPrice } = useSelector(
+    (state: RootState) => state.cart
+  );
+  const dispatch = useDispatch();
+  console.log("cartItems", cartItems);
 
   return (
     <div className="container container--cart">
@@ -97,8 +91,8 @@ const Cart = () => {
             </div>
           </div>
           <div className="content__items">
-            {cartItems.map((cartItem: CartItemProps) => (
-              <CartItem key={cartItem.id} {...cartItem} />
+            {cartItems.map((cartItem) => (
+              <CartItem size={0} key={cartItem.id} {...cartItem} />
             ))}
           </div>
           <div className="cart__bottom">
@@ -106,10 +100,7 @@ const Cart = () => {
               <span>
                 Total pizzas:{" "}
                 <b>
-                  {cartItems.reduce(
-                    (sum: number, obj: CartItemProps) => sum + obj.count,
-                    0
-                  )}{" "}
+                  {cartItems.reduce((sum: number, obj) => sum + obj.count, 0)}{" "}
                   pcs.
                 </b>
               </span>
@@ -150,7 +141,7 @@ const Cart = () => {
         <CartEmpty />
       )}
     </div>
-  )
-}
+  );
+};
 
-export default Cart
+export default Cart;

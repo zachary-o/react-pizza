@@ -1,15 +1,17 @@
-import { useSelector } from "react-redux"
-import { Link, useLocation } from "react-router-dom"
-import logoSvg from "../../assets/img/pizza-logo.svg"
-import Search from "../Search"
+import { useSelector } from "react-redux";
+import { Link, useLocation } from "react-router-dom";
+import logoSvg from "../../assets/img/pizza-logo.svg";
+import { RootState } from "../../redux/store";
+import Search from "../Search";
 
 const Header = () => {
-  const { cartItems, totalPrice } = useSelector((state) => (state as any).cart)
-  const location = useLocation()
-  const totalCount = cartItems.reduce(
-    (sum: number, obj: any) => sum + obj.count,
-    0
-  )
+  const { cartItems, totalPrice } = useSelector(
+    (state: RootState) => state.cart
+  );
+  const location = useLocation();
+  const totalCount = cartItems.reduce((sum, obj) => sum + obj.count, 0);
+
+  console.log("cartItems", cartItems);
 
   return (
     <div className="header">
@@ -64,7 +66,7 @@ const Header = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

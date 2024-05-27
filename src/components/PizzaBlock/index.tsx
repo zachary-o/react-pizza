@@ -1,10 +1,11 @@
-import { useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { Link } from "react-router-dom"
-import { PizzaBlockProps } from "../../pages/Home"
-import { addProduct } from "../../redux/slices/cartSlice"
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { PizzaBlockProps } from "../../pages/Home";
+import { addProduct } from "../../redux/slices/cartSlice";
+import { RootState } from "../../redux/store";
 
-const pizzaTypes: string[] = ["thin", "traditional"]
+const pizzaTypes: string[] = ["thin", "traditional"];
 
 const PizzaBlock = ({
   id,
@@ -14,15 +15,13 @@ const PizzaBlock = ({
   sizes,
   price,
 }: PizzaBlockProps) => {
-  const [activeSizeIndex, setActiveSizeIndex] = useState(0)
-  const [activeTypeIndex, setActiveTypeIndex] = useState(0)
-  const dispatch = useDispatch()
-  const cartItem = useSelector((state) =>
-    (state as any).cart.cartItems.find(
-      (cartItem: { id: number }) => cartItem.id === id
-    )
-  )
-  const addedCount = cartItem ? cartItem.count : 0
+  const [activeSizeIndex, setActiveSizeIndex] = useState(0);
+  const [activeTypeIndex, setActiveTypeIndex] = useState(0);
+  const dispatch = useDispatch();
+  const cartItem = useSelector((state: RootState) =>
+    state.cart.cartItems.find((cartItem) => cartItem.id === id)
+  );
+  const addedCount = cartItem ? cartItem.count : 0;
   const handleAddToCart = () => {
     const payload = {
       id,
@@ -31,9 +30,9 @@ const PizzaBlock = ({
       price,
       type: pizzaTypes[activeTypeIndex],
       size: sizes[activeSizeIndex],
-    }
-    dispatch(addProduct(payload))
-  }
+    };
+    dispatch(addProduct(payload));
+  };
 
   return (
     <div className="pizza-block">
@@ -88,7 +87,7 @@ const PizzaBlock = ({
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default PizzaBlock
+export default PizzaBlock;
