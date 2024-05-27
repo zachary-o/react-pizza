@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
+import { Link } from "react-router-dom"
 import { addProduct } from "../../redux/slices/cartSlice"
 
 const pizzaTypes = ["thin", "traditional"]
@@ -33,10 +34,13 @@ const PizzaBlock = ({
     dispatch(addProduct(payload))
   }
 
+  console.log("PizzaBlock id", id)
   return (
     <div className="pizza-block">
-      <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
-      <h4 className="pizza-block__title">{name}</h4>
+      <Link to={`/pizza/${id}`}>
+        <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
+        <h4 className="pizza-block__title">{name}</h4>
+      </Link>
       <div className="pizza-block__selector">
         <ul>
           {types.map((type) => (

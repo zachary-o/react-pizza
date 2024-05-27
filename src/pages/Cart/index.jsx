@@ -8,7 +8,6 @@ import CartEmpty from "./CartEmpty"
 const Cart = () => {
   const { cartItems, totalPrice } = useSelector((state) => state.cart)
   const dispatch = useDispatch()
-  console.log("cartItems", cartItems)
 
   return (
     <div className="container container--cart">

@@ -1,11 +1,11 @@
-import { Link } from "react-router-dom";
-import img from "../../assets/img/empty-cart.png";
+import { Link } from "react-router-dom"
+import img from "../../assets/img/empty-cart.png"
 
 const CartEmpty = () => {
   return (
     <div className="cart cart--empty">
       <h2>
-        Your cart is empty <icon>😕</icon>
+        Your cart is empty <span>😕</span>
       </h2>
       <p>
         You haven't added any products yet
@@ -17,6 +17,6 @@ const CartEmpty = () => {
         <span>Go back</span>
       </Link>
     </div>
-  );
-};
-export default CartEmpty;
+  )
+}
+export default CartEmpty

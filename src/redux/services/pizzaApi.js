@@ -10,7 +10,10 @@ export const pizzaApi = createApi({
             query: ({ category, sortBy, order, search, currentPage }) =>
                 `pizza?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`,
         }),
+        getPizzaById: builder.query({
+            query: (id) => `pizza?id=${id}`,
+        }),
     }),
 })
 
-export const { useGetPizzasQuery } = pizzaApi
+export const { useGetPizzasQuery, useGetPizzaByIdQuery } = pizzaApi

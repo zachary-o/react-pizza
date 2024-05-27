@@ -1,35 +1,35 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setSortIndex } from "../../redux/slices/filterSlice";
+import React, { useEffect, useRef, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { setSortIndex } from "../../redux/slices/filterSlice"
 
 export const sortOptions = [
   { name: "popularity ⬇️", sortBy: "rating" },
   { name: "popularity ⬆️", sortBy: "-rating" },
   { name: "price ⬇️", sortBy: "price" },
   { name: "price ⬆️", sortBy: "-price" },
-  { name: "A-Z", sortBy: "name" },
-  { name: "Z-A", sortBy: "-name" },
-];
+  { name: "A-Z", sortBy: "-name" },
+  { name: "Z-A", sortBy: "name" },
+]
 
 const Sort = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const { sortIndex } = useSelector((state) => state.filter);
-  const dispatch = useDispatch();
-  const sortRef = useRef();
+  const [isOpen, setIsOpen] = useState(false)
+  const { sortIndex } = useSelector((state) => state.filter)
+  const dispatch = useDispatch()
+  const sortRef = useRef()
 
   useEffect(() => {
     const handleSortClick = (event) => {
       if (!event.composedPath().includes(sortRef.current)) {
-        setIsOpen(false);
+        setIsOpen(false)
       }
-    };
+    }
 
-    document.body.addEventListener("click", handleSortClick);
+    document.body.addEventListener("click", handleSortClick)
 
     return () => {
-      document.body.removeEventListener("click", handleSortClick);
-    };
-  }, [isOpen]);
+      document.body.removeEventListener("click", handleSortClick)
+    }
+  }, [isOpen])
 
   return (
     <div className="sort" ref={sortRef}>
@@ -59,8 +59,8 @@ const Sort = () => {
                 }
                 key={index}
                 onClick={() => {
-                  dispatch(setSortIndex(sortOption));
-                  setIsOpen(false);
+                  dispatch(setSortIndex(sortOption))
+                  setIsOpen(false)
                 }}
               >
                 {sortOption.name}
@@ -70,7 +70,7 @@ const Sort = () => {
         </div>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default Sort;
+export default Sort
