@@ -23,8 +23,8 @@ const Sort = () => {
   const sortRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const handleSortClick = (event: any) => {
-      if (!event.composedPath().includes(sortRef.current)) {
+    const handleSortClick = (event: MouseEvent) => {
+      if (sortRef.current && !sortRef.current.contains(event.target as Node)) {
         setIsOpen(false)
       }
     }
