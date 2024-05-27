@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 export type CartItem = {
   id: number;
@@ -6,7 +6,7 @@ export type CartItem = {
   imageUrl: string;
   name: string;
   type: string;
-  sizes: number[];
+  size: number;
   price: number;
 };
 
@@ -20,11 +20,21 @@ const initialState: CartSliceState = {
   totalPrice: 0,
 };
 
+interface RemoveSameProductPayload {
+  id: number;
+  price: number;
+}
+interface RemoveProductPayload {
+  id: number;
+  price: number;
+  count: number;
+}
+
 const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    addProduct: (state, action) => {
+    addProduct: (state, action: PayloadAction<CartItem>) => {
       const isInCart = state.cartItems.find(
         (cartItem) => cartItem.id === action.payload.id
       );
@@ -38,20 +48,25 @@ const cartSlice = createSlice({
       }
       state.totalPrice += action.payload.price;
     },
-    removeProduct: (state, action) => {
+    removeProduct: (state, action: PayloadAction<RemoveProductPayload>) => {
       state.cartItems = state.cartItems.filter(
         (cartItem) => cartItem.id !== action.payload.id
       );
       state.totalPrice -= action.payload.price * action.payload.count;
     },
-    removeSameProduct: (state, action) => {
+    removeSameProduct: (
+      state,
+      action: PayloadAction<RemoveSameProductPayload>
+    ) => {
       const isInCart = state.cartItems.find(
         (cartItem) => cartItem.id === action.payload.id
       );
-      if (isInCart) {
+      if (isInCart && isInCart.count > 0) {
         isInCart.count -= 1;
       }
-      state.totalPrice -= action.payload.price;
+      if (state.totalPrice > 0) {
+        state.totalPrice -= action.payload.price;
+      }
     },
     clearCart: (state) => {
       state.cartItems = [];

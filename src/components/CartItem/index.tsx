@@ -38,9 +38,10 @@ const CartItem = ({
         </p>
       </div>
       <div className="cart__item-count">
-        <div
+        <button
           className="button button--outline button--circle cart__item-count-minus"
           onClick={() => dispatch(removeSameProduct({ id, price }))}
+          disabled={count === 1}
         >
           <svg
             width="10"
@@ -58,11 +59,15 @@ const CartItem = ({
               fill="#EB5A1E"
             />
           </svg>
-        </div>
+        </button>
         <b>{count}</b>
-        <div
+        <button
           className="button button--outline button--circle cart__item-count-plus"
-          onClick={() => dispatch(addProduct({ id, price }))}
+          onClick={() =>
+            dispatch(
+              addProduct({ id, count, imageUrl, name, price, size, type })
+            )
+          }
         >
           <svg
             width="10"
@@ -80,7 +85,7 @@ const CartItem = ({
               fill="#EB5A1E"
             />
           </svg>
-        </div>
+        </button>
       </div>
       <div className="cart__item-price">
         <b>${price * count}</b>
@@ -89,7 +94,7 @@ const CartItem = ({
         className="cart__item-remove"
         onClick={() => dispatch(removeProduct({ id, price, count }))}
       >
-        <div className="button button--outline button--circle">
+        <button className="button button--outline button--circle">
           <svg
             width="10"
             height="10"
@@ -106,7 +111,7 @@ const CartItem = ({
               fill="#EB5A1E"
             />
           </svg>
-        </div>
+        </button>
       </div>
     </div>
   );

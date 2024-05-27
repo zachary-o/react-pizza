@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setCategoryIndex } from "../../redux/slices/filterSlice";
 import { RootState } from "../../redux/store";
@@ -31,4 +32,4 @@ const Categories = () => {
   );
 };
 
-export default Categories;
+export default memo(Categories);

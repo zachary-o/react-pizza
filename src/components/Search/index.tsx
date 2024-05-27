@@ -1,25 +1,29 @@
-import debounce from "lodash.debounce"
-import { ChangeEvent, useCallback, useRef, useState } from "react"
-import { useDispatch } from "react-redux"
-import { setSearchValue } from "../../redux/slices/filterSlice"
-import styles from "./Search.module.scss"
+import debounce from "lodash.debounce";
+import { ChangeEvent, useCallback, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
+import { setSearchValue } from "../../redux/slices/filterSlice";
+import styles from "./Search.module.scss";
 
 const Search = () => {
-  const [inputValue, setInputValue] = useState("")
-  const dispatch = useDispatch()
-  const inputRef = useRef<HTMLInputElement>(null)
+  const [inputValue, setInputValue] = useState("");
+  const dispatch = useDispatch();
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const debouncedDispatch = debounce((searchQuery) => {
+    dispatch(setSearchValue(searchQuery));
+  }, 1000);
 
   const debouncedSearch = useCallback(
-    debounce((searchQuery) => {
-      dispatch(setSearchValue(searchQuery))
-    }, 1000),
-    [dispatch]
-  )
+    (searchQuery: string) => {
+      debouncedDispatch(searchQuery);
+    },
+    [debouncedDispatch]
+  );
 
   const onChangeInput = (event: ChangeEvent<HTMLInputElement>) => {
-    setInputValue(event.target.value)
-    debouncedSearch(event.target.value)
-  }
+    setInputValue(event.target.value);
+    debouncedSearch(event.target.value);
+  };
 
   return (
     <div className={styles.root}>
@@ -46,9 +50,9 @@ const Search = () => {
         <svg
           className={styles.clearIcon}
           onClick={() => {
-            setInputValue("")
-            dispatch(setSearchValue(""))
-            inputRef.current?.focus()
+            setInputValue("");
+            dispatch(setSearchValue(""));
+            inputRef.current?.focus();
           }}
           height="48"
           viewBox="0 0 48 48"
@@ -60,7 +64,7 @@ const Search = () => {
         </svg>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default Search
+export default Search;

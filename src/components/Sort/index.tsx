@@ -1,20 +1,20 @@
-import { useEffect, useRef, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setSortIndex } from "../../redux/slices/filterSlice";
+import { SortBy, setSortIndex } from "../../redux/slices/filterSlice";
 import { RootState } from "../../redux/store";
 
-type SortOptions = {
+interface SortOptions {
   name: string;
-  sortBy: string;
-};
+  sortBy: SortBy;
+}
 
 export const sortOptions: SortOptions[] = [
   { name: "popularity ⬇️", sortBy: "rating" },
   { name: "popularity ⬆️", sortBy: "-rating" },
   { name: "price ⬇️", sortBy: "price" },
   { name: "price ⬆️", sortBy: "-price" },
-  { name: "A-Z", sortBy: "-name" },
-  { name: "Z-A", sortBy: "name" },
+  { name: "A-Z", sortBy: "name" },
+  { name: "Z-A", sortBy: "-name" },
 ];
 
 const Sort = () => {
@@ -22,6 +22,7 @@ const Sort = () => {
   const { sortIndex } = useSelector((state: RootState) => state.filter);
   const dispatch = useDispatch();
   const sortRef = useRef<HTMLDivElement>(null);
+  console.count("Sort");
 
   useEffect(() => {
     const handleSortClick = (event: MouseEvent) => {
@@ -79,4 +80,4 @@ const Sort = () => {
   );
 };
 
-export default Sort;
+export default memo(Sort);

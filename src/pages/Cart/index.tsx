@@ -10,7 +10,6 @@ const Cart = () => {
     (state: RootState) => state.cart
   );
   const dispatch = useDispatch();
-  console.log("cartItems", cartItems);
 
   return (
     <div className="container container--cart">
@@ -92,7 +91,7 @@ const Cart = () => {
           </div>
           <div className="content__items">
             {cartItems.map((cartItem) => (
-              <CartItem size={0} key={cartItem.id} {...cartItem} />
+              <CartItem key={cartItem.id} {...cartItem} />
             ))}
           </div>
           <div className="cart__bottom">

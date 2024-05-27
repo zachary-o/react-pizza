@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { memo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { PizzaBlockProps } from "../../pages/Home";
@@ -30,6 +30,7 @@ const PizzaBlock = ({
       price,
       type: pizzaTypes[activeTypeIndex],
       size: sizes[activeSizeIndex],
+      count: addedCount,
     };
     dispatch(addProduct(payload));
   };
@@ -90,4 +91,4 @@ const PizzaBlock = ({
   );
 };
 
-export default PizzaBlock;
+export default memo(PizzaBlock);

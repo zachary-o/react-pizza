@@ -38,7 +38,9 @@ const PizzaPage = () => {
           <img src={pizza?.imageUrl} alt="Pizza" />
           <h2>{pizza?.name}</h2>
           <h4>${pizza?.price}</h4>
-          <button onClick={() => navigate(-1)}>&larr; Go back</button>
+          <button className="button button--black" onClick={() => navigate(-1)}>
+            &larr; Go back
+          </button>
         </>
       )}
     </div>
