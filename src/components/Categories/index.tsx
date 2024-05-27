@@ -1,11 +1,17 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setCategoryIndex } from "../../redux/slices/filterSlice";
+import { useDispatch, useSelector } from "react-redux"
+import { setCategoryIndex } from "../../redux/slices/filterSlice"
 
 const Categories = () => {
-  const categories = ["All", "Meat", "Vegeterian", "BBQ", "Spicy", "Wrapped"];
-  const { categoryIndex } = useSelector((state) => state.filter);
-  const dispatch = useDispatch();
+  const categories: string[] = [
+    "All",
+    "Meat",
+    "Vegeterian",
+    "BBQ",
+    "Spicy",
+    "Wrapped",
+  ]
+  const { categoryIndex } = useSelector((state) => (state as any).filter)
+  const dispatch = useDispatch()
 
   return (
     <div className="categories">
@@ -21,7 +27,7 @@ const Categories = () => {
         ))}
       </ul>
     </div>
-  );
-};
+  )
+}
 
-export default Categories;
+export default Categories

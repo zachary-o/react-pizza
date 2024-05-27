@@ -1,9 +1,10 @@
-import React, { useState } from "react"
+import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Link } from "react-router-dom"
+import { PizzaBlockProps } from "../../pages/Home"
 import { addProduct } from "../../redux/slices/cartSlice"
 
-const pizzaTypes = ["thin", "traditional"]
+const pizzaTypes: string[] = ["thin", "traditional"]
 
 const PizzaBlock = ({
   id,
@@ -12,14 +13,14 @@ const PizzaBlock = ({
   types,
   sizes,
   price,
-  category,
-  rating,
-}) => {
+}: PizzaBlockProps) => {
   const [activeSizeIndex, setActiveSizeIndex] = useState(0)
   const [activeTypeIndex, setActiveTypeIndex] = useState(0)
   const dispatch = useDispatch()
   const cartItem = useSelector((state) =>
-    state.cart.cartItems.find((cartItem) => cartItem.id === id)
+    (state as any).cart.cartItems.find(
+      (cartItem: { id: number }) => cartItem.id === id
+    )
   )
   const addedCount = cartItem ? cartItem.count : 0
   const handleAddToCart = () => {
@@ -34,7 +35,6 @@ const PizzaBlock = ({
     dispatch(addProduct(payload))
   }
 
-  console.log("PizzaBlock id", id)
   return (
     <div className="pizza-block">
       <Link to={`/pizza/${id}`}>

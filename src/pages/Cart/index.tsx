@@ -1,12 +1,21 @@
-import React from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Link } from "react-router-dom"
 import CartItem from "../../components/CartItem"
 import { clearCart } from "../../redux/slices/cartSlice"
 import CartEmpty from "./CartEmpty"
 
+export type CartItemProps = {
+  id: number
+  count: number
+  imageUrl: string
+  name: string
+  price: number
+  size: number
+  type: string
+}
+
 const Cart = () => {
-  const { cartItems, totalPrice } = useSelector((state) => state.cart)
+  const { cartItems, totalPrice } = useSelector((state) => (state as any).cart)
   const dispatch = useDispatch()
 
   return (
@@ -88,7 +97,7 @@ const Cart = () => {
             </div>
           </div>
           <div className="content__items">
-            {cartItems.map((cartItem) => (
+            {cartItems.map((cartItem: CartItemProps) => (
               <CartItem key={cartItem.id} {...cartItem} />
             ))}
           </div>
@@ -96,7 +105,13 @@ const Cart = () => {
             <div className="cart__bottom-details">
               <span>
                 Total pizzas:{" "}
-                <b>{cartItems.reduce((a, b) => a + b.count, 0)} pcs.</b>
+                <b>
+                  {cartItems.reduce(
+                    (sum: number, obj: CartItemProps) => sum + obj.count,
+                    0
+                  )}{" "}
+                  pcs.
+                </b>
               </span>
               <span>
                 Order price: <b>${totalPrice}</b>{" "}

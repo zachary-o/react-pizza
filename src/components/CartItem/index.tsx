@@ -1,11 +1,20 @@
 import { useDispatch } from "react-redux"
+import { CartItemProps } from "../../pages/Cart"
 import {
   addProduct,
   removeProduct,
   removeSameProduct,
 } from "../../redux/slices/cartSlice"
 
-const CartItem = ({ count, id, imageUrl, name, price, size, type }) => {
+const CartItem = ({
+  count,
+  id,
+  imageUrl,
+  name,
+  price,
+  size,
+  type,
+}: CartItemProps) => {
   const dispatch = useDispatch()
 
   return (

@@ -1,25 +1,25 @@
-import debounce from "lodash.debounce";
-import React, { useCallback, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
-import { setSearchValue } from "../../redux/slices/filterSlice";
-import styles from "./Search.module.scss";
+import debounce from "lodash.debounce"
+import { useCallback, useRef, useState } from "react"
+import { useDispatch } from "react-redux"
+import { setSearchValue } from "../../redux/slices/filterSlice"
+import styles from "./Search.module.scss"
 
 const Search = () => {
-  const [inputValue, setInputValue] = useState("");
-  const dispatch = useDispatch();
-  const inputRef = useRef();
+  const [inputValue, setInputValue] = useState("")
+  const dispatch = useDispatch()
+  const inputRef = useRef<HTMLInputElement>(null)
 
   const debouncedSearch = useCallback(
     debounce((searchQuery) => {
-      dispatch(setSearchValue(searchQuery));
+      dispatch(setSearchValue(searchQuery))
     }, 1000),
     [dispatch]
-  );
+  )
 
-  const onChangeInput = (event) => {
-    setInputValue(event.target.value);
-    debouncedSearch(event.target.value);
-  };
+  const onChangeInput = (event: any) => {
+    setInputValue(event.target.value)
+    debouncedSearch(event.target.value)
+  }
 
   return (
     <div className={styles.root}>
@@ -46,9 +46,9 @@ const Search = () => {
         <svg
           className={styles.clearIcon}
           onClick={() => {
-            setInputValue("");
-            dispatch(setSearchValue(""));
-            inputRef.current.focus();
+            setInputValue("")
+            dispatch(setSearchValue(""))
+            inputRef.current?.focus()
           }}
           height="48"
           viewBox="0 0 48 48"
@@ -60,7 +60,7 @@ const Search = () => {
         </svg>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default Search;
+export default Search

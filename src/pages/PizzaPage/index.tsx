@@ -1,12 +1,18 @@
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { useGetPizzaByIdQuery } from "../../redux/services/pizzaApi"
 
+type Pizza = {
+  name: string
+  imageUrl: string
+  price: number | null
+}
+
 const PizzaPage = () => {
-  const [pizza, setPizza] = useState({
+  const [pizza, setPizza] = useState<Pizza>({
     name: "",
     imageUrl: "",
-    price: "",
+    price: null,
   })
   const { id } = useParams()
   const navigate = useNavigate()

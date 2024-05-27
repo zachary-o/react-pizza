@@ -1,11 +1,10 @@
-import React from "react";
-import ReactPaginate from "react-paginate";
-import { useDispatch } from "react-redux";
-import { setCurrentPage } from "../../redux/slices/filterSlice";
-import styles from "./Pagination.module.scss";
+import ReactPaginate from "react-paginate"
+import { useDispatch } from "react-redux"
+import { setCurrentPage } from "../../redux/slices/filterSlice"
+import styles from "./Pagination.module.scss"
 
 const Pagination = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
   return (
     <ReactPaginate
       className={styles.root}
@@ -17,7 +16,7 @@ const Pagination = () => {
       pageCount={3}
       renderOnZeroPageCount={null}
     />
-  );
-};
+  )
+}
 
-export default Pagination;
+export default Pagination

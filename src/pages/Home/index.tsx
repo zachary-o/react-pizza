@@ -1,5 +1,5 @@
 import qs from "qs"
-import React, { useEffect, useRef } from "react"
+import { useEffect, useRef } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import Categories from "../../components/Categories"
@@ -10,13 +10,22 @@ import Sort, { sortOptions } from "../../components/Sort"
 import { useGetPizzasQuery } from "../../redux/services/pizzaApi"
 import { setFilters } from "../../redux/slices/filterSlice"
 
+export type PizzaBlockProps = {
+  id: number
+  imageUrl: string
+  name: string
+  types: number[]
+  sizes: number[]
+  price: number
+}
+
 const Home = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const isMounted = useRef(false)
   const isSearch = useRef(false)
   const { categoryIndex, sortIndex, currentPage, searchValue } = useSelector(
-    (state) => state.filter
+    (state) => (state as any).filter
   )
 
   const category = categoryIndex > 0 ? `category=${categoryIndex}` : ""
@@ -77,7 +86,7 @@ const Home = () => {
       {error ? (
         <div className="content__error-info">
           <h2>
-            An Error occured <icon>😕</icon>
+            An Error occured <span>😕</span>
           </h2>
           <p>
             Failed to load pizzas.
@@ -89,7 +98,9 @@ const Home = () => {
         <div className="content__items">
           {isLoading
             ? [...Array(4)].map((_, index) => <Skeleton key={index} />)
-            : data.map((pizza) => <PizzaBlock key={pizza.id} {...pizza} />)}
+            : data.map((pizza: PizzaBlockProps) => (
+                <PizzaBlock key={pizza.id} {...pizza} />
+              ))}
         </div>
       )}
 
