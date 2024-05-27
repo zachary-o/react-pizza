@@ -1,14 +1,14 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import CartItem from "../../components/CartItem";
-import { clearCart } from "../../redux/slices/cartSlice";
-import CartEmpty from "./CartEmpty";
+import React from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { Link } from "react-router-dom"
+import CartItem from "../../components/CartItem"
+import { clearCart } from "../../redux/slices/cartSlice"
+import CartEmpty from "./CartEmpty"
 
 const Cart = () => {
-  const { cartItems, totalPrice } = useSelector((state) => state.cart);
-  const dispatch = useDispatch();
-  console.log("cartItems", cartItems);
+  const { cartItems, totalPrice } = useSelector((state) => state.cart)
+  const dispatch = useDispatch()
+  console.log("cartItems", cartItems)
 
   return (
     <div className="container container--cart">
@@ -136,7 +136,7 @@ const Cart = () => {
         <CartEmpty />
       )}
     </div>
-  );
-};
+  )
+}
 
-export default Cart;
+export default Cart

@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { addProduct } from "../../redux/slices/cartSlice";
+import React, { useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { addProduct } from "../../redux/slices/cartSlice"
 
-const pizzaTypes = ["thin", "traditional"];
+const pizzaTypes = ["thin", "traditional"]
 
 const PizzaBlock = ({
   id,
@@ -14,13 +14,13 @@ const PizzaBlock = ({
   category,
   rating,
 }) => {
-  const [activeSizeIndex, setActiveSizeIndex] = useState(0);
-  const [activeTypeIndex, setActiveTypeIndex] = useState(0);
-  const dispatch = useDispatch();
+  const [activeSizeIndex, setActiveSizeIndex] = useState(0)
+  const [activeTypeIndex, setActiveTypeIndex] = useState(0)
+  const dispatch = useDispatch()
   const cartItem = useSelector((state) =>
     state.cart.cartItems.find((cartItem) => cartItem.id === id)
-  );
-  const addedCount = cartItem ? cartItem.count : 0;
+  )
+  const addedCount = cartItem ? cartItem.count : 0
   const handleAddToCart = () => {
     const payload = {
       id,
@@ -29,10 +29,9 @@ const PizzaBlock = ({
       price,
       type: pizzaTypes[activeTypeIndex],
       size: sizes[activeSizeIndex],
-    };
-    console.log("payload", payload);
-    dispatch(addProduct(payload));
-  };
+    }
+    dispatch(addProduct(payload))
+  }
 
   return (
     <div className="pizza-block">
@@ -85,7 +84,7 @@ const PizzaBlock = ({
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default PizzaBlock;
+export default PizzaBlock

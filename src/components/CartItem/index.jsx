@@ -1,12 +1,12 @@
-import { useDispatch } from "react-redux";
+import { useDispatch } from "react-redux"
 import {
   addProduct,
-  removeSameProduct,
   removeProduct,
-} from "../../redux/slices/cartSlice";
+  removeSameProduct,
+} from "../../redux/slices/cartSlice"
 
 const CartItem = ({ count, id, imageUrl, name, price, size, type }) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   return (
     <div className="cart__item">
@@ -69,7 +69,7 @@ const CartItem = ({ count, id, imageUrl, name, price, size, type }) => {
       </div>
       <div
         className="cart__item-remove"
-        onClick={() => dispatch(removeProduct(id))}
+        onClick={() => dispatch(removeProduct({ id, price, count }))}
       >
         <div className="button button--outline button--circle">
           <svg
@@ -91,6 +91,6 @@ const CartItem = ({ count, id, imageUrl, name, price, size, type }) => {
         </div>
       </div>
     </div>
-  );
-};
-export default CartItem;
+  )
+}
+export default CartItem
