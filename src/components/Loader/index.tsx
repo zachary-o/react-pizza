@@ -1,11 +1,11 @@
-import React from "react"
+import Lottie from "lottie-react"
+import loaderGif from "../../assets/img/pizza-loader.json"
 import styles from "./Loader.module.scss"
-import loaderGif from "../../assets/img/pizza-loader.gif"
 
 const Loader = () => {
   return (
     <div className={styles.loaderOverlay}>
-      <img className={styles.loaderGif} src={loaderGif} alt="Loading..." />
+      <Lottie className={styles.loaderGif} animationData={loaderGif} />
     </div>
   )
 }

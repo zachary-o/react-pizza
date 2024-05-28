@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from "react-redux"
 import { Link, useLocation } from "react-router-dom"
 import logoSvg from "../../assets/img/pizza-logo.svg"
 import { setCartItems } from "../../redux/slices/cartSlice"
+import { initialSortIndex, setFilters } from "../../redux/slices/filterSlice"
 import { RootState } from "../../redux/store"
 import Search from "../Search"
-import { initialSortIndex, setFilters } from "../../redux/slices/filterSlice"
 
 const Header = () => {
   const { cartItems, totalPrice } = useSelector(

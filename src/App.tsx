@@ -11,28 +11,16 @@ const PizzaPage = lazy(() => import("./pages/PizzaPage"))
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<MainLayout />}>
-        <Route path="" element={<Home />} />
-        <Route
-          path="cart"
-          element={
-            <Suspense fallback={<Loader />}>
-              <Cart />
-            </Suspense>
-          }
-        />
-        <Route
-          path="pizza/:id"
-          element={
-            <Suspense fallback={<Loader />}>
-              <PizzaPage />
-            </Suspense>
-          }
-        />
-        <Route path="*" element={<NotFound />} />
-      </Route>
-    </Routes>
+    <Suspense fallback={<Loader />}>
+      <Routes>
+        <Route path="/" element={<MainLayout />}>
+          <Route path="" element={<Home />} />
+          <Route path="cart" element={<Cart />} />
+          <Route path="pizza/:id" element={<PizzaPage />} />
+          <Route path="*" element={<NotFound />} />
+        </Route>
+      </Routes>
+    </Suspense>
   )
 }
 
