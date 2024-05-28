@@ -1,22 +1,51 @@
-import { useSelector } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
-import logoSvg from "../../assets/img/pizza-logo.svg";
-import { RootState } from "../../redux/store";
-import Search from "../Search";
+import { useEffect, useRef } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { Link, useLocation } from "react-router-dom"
+import logoSvg from "../../assets/img/pizza-logo.svg"
+import { setCartItems } from "../../redux/slices/cartSlice"
+import { RootState } from "../../redux/store"
+import Search from "../Search"
+import { initialSortIndex, setFilters } from "../../redux/slices/filterSlice"
 
 const Header = () => {
   const { cartItems, totalPrice } = useSelector(
     (state: RootState) => state.cart
-  );
-  const location = useLocation();
-  const totalCount = cartItems.reduce((sum, obj) => sum + obj.count, 0);
+  )
+  const isMounted = useRef(false)
+  const dispatch = useDispatch()
+  const location = useLocation()
+  const totalCount = cartItems.reduce((sum, obj) => sum + obj.count, 0)
 
-  console.log("cartItems", cartItems);
+  useEffect(() => {
+    if (isMounted.current) {
+      const json = JSON.stringify(cartItems)
+      localStorage.setItem("cart", json)
+    } else {
+      const cartFromLocalStorage = JSON.parse(
+        localStorage.getItem("cart") || "[]"
+      )
+      if (cartFromLocalStorage.length > 0) {
+        dispatch(setCartItems(cartFromLocalStorage))
+      }
+    }
+    isMounted.current = true
+  }, [cartItems, dispatch])
 
   return (
     <div className="header">
       <div className="container">
-        <Link to="/">
+        <Link
+          to="/"
+          onClick={() =>
+            dispatch(
+              setFilters({
+                categoryIndex: 0,
+                sortIndex: initialSortIndex,
+                currentPage: 1,
+              })
+            )
+          }
+        >
           <div className="header__logo">
             <img width="38" src={logoSvg} alt="Pizza logo" />
             <div>
@@ -66,7 +95,7 @@ const Header = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header
